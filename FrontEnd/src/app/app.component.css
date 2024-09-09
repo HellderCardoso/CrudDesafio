@@ -1,0 +1,102 @@
+form {
+  margin: 1.25rem; 
+}
+
+.form-group {
+  margin-bottom: 1.25rem; 
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5rem; 
+}
+
+
+input[type="text"],
+input[type="email"],
+input[type="number"],
+select {
+  width: 100%; 
+  max-width: 30rem; 
+  padding: 0.625rem; 
+  margin-top: 0.3125rem; 
+  border: 0.0625rem solid #ddd; 
+  border-radius: 0.25rem; 
+  box-sizing: border-box; 
+  font-size: 1rem; 
+}
+
+button {
+  padding: 0.75rem 1.25rem; 
+  margin-top: 0.625rem; 
+  margin-right: 0.625rem; 
+  border: none;
+  border-radius: 0.25rem; 
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  display: inline-block;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.product-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1.25rem; 
+}
+
+.product-table th,
+.product-table td {
+  border: 0.0625rem solid #ddd; 
+  padding: 0.625rem; 
+  text-align: left;
+}
+
+.product-table th {
+  background-color: #f4f4f4;
+}
+
+.item {
+  margin-bottom: 1.25rem; 
+}
+
+.pedido-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.pedido-list li {
+  padding: 0.75rem; 
+  border-bottom: 0.0625rem solid #ddd; 
+}
+
+.button-group {
+  display: flex;
+  gap: 0.625rem; 
+  flex-wrap: wrap;
+}
+
+
+@media (max-width: 48rem) {
+  .button-group {
+      flex-direction: column;
+  }
+}
+
+.carrinho-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.carrinho-table th, 
+.carrinho-table td {
+  border: 0.0625rem solid #ddd; 
+  padding: 0.5rem; 
+}
+
+.carrinho-table th {
+  background-color: #f4f4f4;
+}

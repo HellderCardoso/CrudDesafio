@@ -1,0 +1,125 @@
+<h2>Simulador de Pedidos</h2>
+
+<div *ngIf="!showForm && pedidos.length === 0">
+  <button (click)="getPedidos()">Consultar Pedidos</button>
+  <button (click)="toggleForm()">Incluir Novo Pedido</button>
+</div>
+
+<div *ngIf="pedidos.length > 0">
+  <h3>Pedidos:</h3>
+  <ul class="pedido-list">
+    <li *ngFor="let pedido of pedidos">
+      <div>
+        <strong>Nome do Cliente:</strong> {{ pedido.nomeCliente }}
+      </div>
+      <div>
+        <strong>Email do Cliente:</strong> {{ pedido.emailCliente }}
+      </div>
+      <div>
+        <strong>Pago:</strong> {{ pedido.pago ? 'Sim' : 'Não' }}
+      </div>
+      <div>
+        <strong>Valor Total:</strong> {{ pedido.valorTotal | currency }}
+      </div>
+      <div *ngIf="pedido.itensPedido.length > 0">
+        <h4>Itens do Pedido:</h4>
+        <ul>
+          <li *ngFor="let item of pedido.itensPedido">
+            <div>
+              <strong>Nome do Produto:</strong> {{ item.nomeProduto }}
+            </div>
+            <div>
+              <strong>Valor Unitário:</strong> {{ item.valorUnitario | currency }}
+            </div>
+            <div>
+              <strong>Quantidade:</strong> {{ item.quantidade }}
+            </div>
+          </li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+  <button (click)="voltar()">Voltar</button>
+</div>
+<div *ngIf="showForm">
+  <form (ngSubmit)="addPedido()">
+    <div *ngIf="!produtosSelecionados">
+      <div class="form-group">
+        <label for="nomeCliente">Nome:</label>
+        <input id="nomeCliente" type="text" [(ngModel)]="novoPedido.nomeCliente" name="nomeCliente" required />
+      </div>
+      <div class="form-group">
+        <label for="emailCliente">E-mail:</label>
+        <input id="emailCliente" type="email" [(ngModel)]="novoPedido.emailCliente" name="emailCliente" required />
+      </div>
+      <button type="button" (click)="loadProdutos()">Selecionar Produtos</button>
+    </div>
+
+    <div *ngIf="produtosSelecionados && produtos.length > 0">
+      <h3>Selecionar Produtos</h3>
+      <table class="product-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Produto</th>
+            <th>Valor</th>
+            <th>Selecionar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let produto of produtos; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ produto.nomeProduto }}</td>
+            <td>{{ produto.valor | currency }}</td>
+            <td>
+              <input 
+                type="number" 
+                [(ngModel)]="selectedQuantities[produto.id]" 
+                name="quantidade{{produto.id}}"
+                placeholder="Quantidade" 
+                min="1" 
+                max="{{ produto.quantidadeEstoque }}"
+              />
+              <button type="button" (click)="addProdutoToCarrinho(produto.id)">Adicionar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div *ngIf="novoPedido.itensPedido.length > 0">
+      <h3>Itens do Pedido</h3>
+      <table class="carrinho-table">
+        <thead>
+          <tr>
+            <th>Produto</th>
+            <th>Quantidade</th>
+            <th>Valor Unitário</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of novoPedido.itensPedido; let i = index">
+            <td>{{ item.nomeProduto }}</td>
+            <td>{{ item.quantidade }}</td>
+            <td>{{ item.valorUnitario | currency }}</td>
+            <td>{{ item.valorUnitario * item.quantidade | currency }}</td>
+          </tr>
+          <tr>
+            <td colspan="3"><strong>Total:</strong></td>
+            <td><strong>{{ calcularTotalPedido() | currency }}</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div *ngIf="produtosSelecionados">
+      <div class="form-group">
+        <label for="pago">Pagamento na retirada?</label>
+        <input id="pago" type="checkbox" [(ngModel)]="novoPedido.pago" name="pago" />
+      </div>
+      <button type="submit">Salvar Pedido</button>
+      <button type="button" (click)="resetForm()">Cancelar</button>
+    </div>
+  </form>
+</div>
