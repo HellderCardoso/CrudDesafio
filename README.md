@@ -30,7 +30,7 @@ Para executar o projeto, você precisará das seguintes ferramentas:
 
 1. Clone o repositório:
     ```bash
-    git clone https://github.com/HellderCardoso/DesafioStefanini
+    git clone https://github.com/HellderCardoso/CrudDesafio
     ```
 
 2. Navegue até o diretório do projeto e inicie o Docker Compose:
